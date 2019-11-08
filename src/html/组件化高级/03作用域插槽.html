@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <son></son>
+        <!-- 作用域插槽，(父组件想拿到子组件的数据，以另一种形式展现出来)
+            1.就要将ul内容用slot包起来 
+            2.拿到子组件的数据，则slot 自定义一个数据
+        -->
+        <son1>
+            <!-- 获取子组件的数据 -->
+            <template slot-scope='slot'>
+                <span v-for='item in slot.data'>{{item}} - </span>
+            </template>
+        </son1>
+        <son1>
+            <template slot-scope='slot'>
+                <span>{{slot.data.join(' - ')}}</span>
+            </template>
+        </son1>
+    </div>
+    <template id='comp'>
+        <div>
+            <ul>
+                <li v-for='item in pLanguage'>{{item}}</li>
+            </ul>
+        </div>
+    </template>
+    <template id='comp1'>
+        <div>
+            <slot :data='pLanguage'>
+                <ul>
+                    <li v-for='item in pLanguage'>{{item}}</li>
+                </ul>
+            </slot>
+        </div>
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+                isShow:true
+            },
+            components:{
+                son:{
+                    template:'#comp',
+                    data () {
+                        return {
+                            pLanguage:['js','c++','java','c#']
+                        }
+                    }
+                },
+                son1:{
+                    template:'#comp1',
+                    data () {
+                        return {
+                            pLanguage:['js','c++','java','c#']
+                        }
+                    }
+                }
+            },
+            methods:{
+            }
+        })
+    </script>
+</body>
+</html>

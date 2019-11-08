@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>案例</title>
+</head>
+<body>
+    <div id='app'>
+        <table>
+            <thead>
+                <th></th>
+                <th width='100'>书籍名称</th>
+                <th width='100'>数量</th>
+                <th width='80'>价格</th>
+                <th width='80'>操作</th>
+            </thead>
+            <tbody>
+                <tr v-for='(item,index) in books'>
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>
+                        <button @click='decade(index)'>-</button>
+                        {{item.num}}
+                        <button @click='add(index)'>+</button>
+                    </td>
+                    <td>
+                        <!-- {{item.price}} -->
+                        <!-- methodes
+                       {{ getFinally(item.price)}} -->
+                       <!-- 过滤器 -->
+                       {{item.price | getFinally}}
+                    </td>
+                    <td>
+                        <button>移除</button>
+                    </td>
+                </tr>
+            </tbody>
+            <h2>总价格:{{}}</h2>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+                books:[
+                   {id:1,name:'编程艺术1',price:119.00,num:1},
+                   {id:2,name:'编程艺术2',price:105.00,num:1},
+                   {id:3,name:'编程艺术3',price:129.00,num:1},
+                   {id:4,name:'编程艺术4',price:139.00,num:1},
+                ]
+            },
+            methods:{
+                //价格显示保留两位小数
+                getFinally (price) {
+                    return '￥' + price.toFixed(2)
+                },
+                decade (index) {
+                    if(this.books[index].num <= 0){
+                        this.books[index].num = 0;
+                        alert('数量不能小于0')
+                    }else{
+                        this.books[index].num --
+                    }
+                },
+                add (index) {
+                    this.books[index].num ++
+                }
+            },
+            filters:{
+                getFinally (price) {
+                    return '￥' + price.toFixed(2)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

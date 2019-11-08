@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件</title>
+</head>
+<body>
+    <div id='app'>
+        <methods1></methods1>
+        <methods2></methods2>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 1.模板分离，script标签，type为text/x-template -->
+    <script type="text/x-template" id='methods1'>
+        <div>
+            <h2>我是方法一</h2>
+        </div>
+    </script>
+    <!-- 2.用template标签 -->
+    <template id='methods2'>
+        <div>
+            <h2>我是方法二</h2>
+        </div>
+    </template>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            components:{
+                methods1:{
+                    template:'#methods1'
+                },
+                methods2:{
+                    template:'#methods2'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

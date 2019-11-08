@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <!-- v-for可以遍历对象 -->
+        <ul>
+            <li v-for='item in info'>{{item}}</li>
+        </ul>
+        <ul>
+            <li v-for='(value,key) in info'>{{key}}：{{value}}</li>
+        </ul>
+        <!-- 有key可以提高性能；当要在数组name aaa 和 bbb中插入一个 ddd 的时候，
+        如果没有key，系统就会将bbb -> ddd ,ccc -> bbb, ccc,
+        有key的时候，就会对照key值，直接在其中插入ddd，原来的bbb ccc顺位后移
+         -->
+        <ul>
+            <li v-for='item in name' :key='item'>{{item}}</li>
+        </ul>
+        <button @click='btnClick'>按钮</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+               info:{
+                   name:'aaa',
+                   age:'18',
+                   height:188
+               },
+               name:['aaa','bbb','ccc']
+            },
+            methods:{
+                btnClick () {
+                    this.name.push('aaa')
+                }
+            }
+        })
+    </script>
+</body>
+</html>

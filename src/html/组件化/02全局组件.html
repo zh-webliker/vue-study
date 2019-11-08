@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件</title>
+</head>
+<body>
+    <div id='app'>
+        <!-- <father></father> -->
+        <over></over>
+        <local></local>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        // const son = Vue.extend({
+        //     template:`
+        //     <div>
+        //         <h2>父亲父亲，我是儿子</h2>    
+        //     </div>
+        //     `
+        // })
+        // const father = Vue.extend({
+        //     template:`
+        //     <div>
+        //         <h2>儿子儿子，我是父亲</h2>
+        //         <son></son>    
+        //     </div>
+        //     `,
+        //     components:{
+        //         son:son
+        //     }
+        // })
+
+        //全局组件语法糖
+        Vue.component('over',{
+                template:`
+                    <div>
+                        <h2>全局组件语法糖</h2>    
+                    </div>
+                `
+        })
+        const app = new Vue({
+            el:'#app',
+            data:{
+
+            },
+            //局部组件
+            // components:{
+            //     father:father
+            // }
+
+            //局部组件语法糖
+            components:{'local':{
+                template:`
+                    <div>
+                        <h2>局部组件语法糖</h2>    
+                    </div>
+                `
+                }
+            }
+        })
+    </script>
+</body>
+</html>

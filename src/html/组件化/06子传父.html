@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件</title>
+</head>
+<body>
+    <div id='app'>
+        <div>{{id}} -- {{name}}</div>
+        <son @father_get='fatherGetData' :list='list'></son>
+    </div>
+    <!--
+    1.组件嵌套，在哪里发送网络请求
+    2.父子组件互相传值 父传子
+    3.子传父 this.$emit()
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <template id='passValue'>
+        <div>
+            <ul>
+                <li v-for='item in list'><button @click='propData(item)'>{{item.name}}</button></li>
+            </ul>
+        </div>
+    </template>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            components:{
+                son:{
+                    template:'#passValue',
+                    data () {
+                        return {
+                            // list: [
+                            //     {id:'aaa',name:'家居'},
+                            //     {id:'bbb',name:'数码'},
+                            //     {id:'ccc',name:'服装'},
+                            //     {id:'ddd',name:'饰品'}
+                            // ]
+                        }
+                    },
+                    methods:{
+                        propData (item) {
+                            //自定义事件,在父组件中用v-on监听自定义事件
+                            this.$emit('father_get',item)
+                        }
+                    },
+                    props:{
+                        list:{
+                            type:Array
+                        }
+                    }
+                }
+            },
+            data:{
+                list: [
+                    {id:'aaa',name:'家居'},
+                    {id:'bbb',name:'数码'},
+                    {id:'ccc',name:'服装'},
+                    {id:'ddd',name:'饰品'}
+                ],
+                id:'',
+                name:''
+            },
+            methods:{
+                fatherGetData (item) {
+                    console.log(item,'父组件接收')
+                    this.id = item.id
+                    this.name = item.name
+                }
+            }
+        })
+    </script>
+</body>
+</html>

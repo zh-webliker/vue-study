@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <son v-if='isShow'></son>
+    </div>
+    <template id='comp'>
+        <div>
+            <h1>哈哈哈哈</h1>
+            <slot><button>按钮1</button></slot>
+        </div>
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+                isShow:true
+            },
+            components:{
+                son:{
+                    template:'#comp',
+                    data () {
+                        return {
+                            isShow: false
+                        }
+                    }
+                }
+            },
+            methods:{
+            }
+        })
+    </script>
+</body>
+</html>

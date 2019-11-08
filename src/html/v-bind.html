@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-bind</title>
+    <style>
+        .active{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id='app'>
+        <a :href='url'>百度一下</a>
+        <div :class="[active,line]">{{message}}</div>
+        <div :class="getClass()">{{message}}</div>
+        <ul>
+            <li v-for='(m,index) in movie' :class="page == index ? 'active' : ''" @click='page = index'>{{m}}</li>
+        </ul>
+        <!-- 动态绑定style -->
+        <h2 :style='{fontSize:"50px"}'>{{message}}</h2>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+                page: 0,
+                message:'你好呀',
+                url:'http://www.baidu.com',
+                active:'aaaa',
+                line:'bbbb',
+                movie:['海王','火影','海尔','雷神']
+            },
+            methods:{
+                getClass:function(){
+                    return [this.active,this.line]
+                }
+            }
+        })
+    </script>
+</body>
+</html>

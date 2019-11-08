@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <son></son>
+        <son ref='aaa'></son>
+        <son></son>
+        <button @click='btnClick'>按钮</button>
+    </div>
+    <template id='comp'>
+        <div>
+            <h1>哈哈哈哈</h1>
+            <button @click='sonClick'>子组件按钮</button>
+        </div>
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+                message:'我是父组件数据'
+            },
+            components:{
+                son:{
+                    template:'#comp',
+                    data () {
+                        return {
+                            name:'我是子组件的name'
+                        }
+                    },
+                    methods:{
+                        showMessage () {
+                            console.log('showMessage')
+                        },
+                        sonClick () {
+                            console.log(this.$parent.message)
+                            this.$parent.showParent()
+                            this.$root.showParent()
+                        }
+                    }
+                }
+            },
+            methods:{
+                btnClick () {
+                    //1.$children
+                    // console.log(this.$children)
+                    // this.$children[0].showMessage()
+                    // for (let i of this.$children){
+                    //     console.log(i.name)
+                    //     i.showMessage()
+                    // }
+                    
+                    //2.ref
+                    console.log(this.$refs.aaa.name)
+                    this.$refs.aaa.showMessage()
+                },
+                showParent () {
+                    console.log('showParent')
+                }
+            }
+        })
+        //父访问子
+        //1.$children
+        //2/$refs
+        //子访问父
+        //1.$parent
+        //2.$root
+    </script>
+</body>
+</html>

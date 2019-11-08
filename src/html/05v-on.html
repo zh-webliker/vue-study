@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-on</title>
+    <style>
+        .active{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id='app'>
+        <!-- 事件调用无参数方法，可接可不接（） -->
+        <button @click='btnClick()'>按钮</button>
+        <button @click='btnClick'>按钮</button>
+
+        <!-- 事件调用有参数方法时，
+        1.接()，不传参，形参为undifined
+        2.接()，传参，正常执行
+        3.不接()，形参为event事件，vue会默认将浏览器生成的event事件对象作为参数传到方法中 -->
+        <button @click='btnClick1()'>按钮1</button>
+        <button @click='btnClick1("按钮2")'>按钮1</button>
+        <button @click='btnClick1'>按钮1</button>
+        
+        <!-- 事件调用有两个参数方法时 -->
+        <!-- 都为undifined -->
+        <button @click='btnClick2()'>按钮2</button> 
+        <!-- 正常执行，但如果abc没加""，则abc是变量，需要在data里定义  -->
+        <button @click='btnClick2("abc",$event)'>按钮2</button>
+        <!-- event事件会赋值给第一个参数 -->
+        <button @click='btnClick2'>按钮2</button>
+        <!-- event为undifined -->
+        <button @click='btnClick2("abc")'>按钮2</button>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+            },
+            methods:{
+                btnClick () {
+                    console.log('hello world')
+                },
+                btnClick1 (e) {
+                    console.log(e)
+                },
+                btnClick2 (e,event) {
+                    console.log('+++++++',e,event)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件</title>
+</head>
+<body>
+    <div id='app'>
+        <son :s_message='message' :s_list='list'></son>
+    </div>
+    <!--
+    1.组件嵌套，在哪里发送网络请求
+    2.父子组件互相传值
+    父传子 ：prop，prop写法很多：a：prop :['子组件中用到的值'] 
+    b: prop {
+        prop1:{
+            type:'Number',//定义传值类型
+            default:'aaa',//如果没有传值的默认值，
+            required:true,//是否为必传值
+        },
+        //类型是数组或者对象的时候，默认值必须是一个函数
+        prop2:{
+            type:Array,
+            default () {
+                return []
+            }
+        }
+    }
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <template id='passValue'>
+        <div>
+            <h1>{{s_message}}</h1>
+            <ul>
+                <li v-for='item in s_list'>{{item}}</li>
+            </ul>
+        </div>
+    </template>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            components:{
+                son:{
+                    template:'#passValue',
+                    props:{
+                        s_message:{
+                            type:String,
+                            default:'哈哈哈哈'
+                        },
+                        s_list:{//如果是sList，在使用的时候:sList会报错，不支持驼峰式
+                            type:Array,
+                            default () {
+                                return ['A','B','C']
+                            }
+                        }
+                    }
+                },
+            },
+            data:{
+                message:'Hello World!',
+                list:['a','b','c']
+            }
+        })
+    </script>
+</body>
+</html>

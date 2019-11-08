@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件</title>
+</head>
+<body>
+    <div id='app'>
+        <son :father_num1='num1' 
+            :father_num2='num2'
+            @change_num1='newNum1'
+            @change_num2='newNum2'/>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <template id='passValue'>
+        <div>
+            <!-- 展示父组件传过来的值，并且修改input的值时父组件的值也改变 -->
+            <h3>props:{{father_num1}}</h3>
+            <h3>data:{{d_num1}}</h3>
+            <input :value='d_num1' 
+                    @input='changeNum1'>
+            <h3>props:{{father_num2}}</h3>
+            <h3>data:{{d_num2}}</h3>
+            <input :value='d_num2' 
+                    @input='changeNum2'>
+        </div> 
+    </template>
+    <script>
+        const app = new Vue({
+            el:'#app',
+            components:{
+               son:{
+                   template:'#passValue',
+                   data () {
+                        return {
+                            d_num1:this.father_num1,
+                            d_num2:this.father_num2
+                        }
+                   },
+                   props:{
+                        father_num1:{//note:不要使用驼峰式
+                           type:Number
+                       },
+                        father_num2:{
+                           type:Number
+                       }
+                   },
+                   methods:{
+                    changeNum1 (event) {
+                        console.log(event.target.value)
+                        this.d_num1 = event.target.value
+                        this.d_num2 = this.d_num1*100
+                        this.$emit('change_num1',this.d_num1)
+                    },
+                    changeNum2 (event) {
+                        this.d_num2 = event.target.value
+                        this.d_num1 = this.d_num2/100
+                        this.$emit('change_num2',event.target.value)
+                    }
+                   }
+               } 
+            },
+            data:{
+                num1:1,
+                num2:2
+            },
+            methods:{
+                newNum1 (value) {
+                    console.log(value,'父组件')
+                    this.num1 = parseFloat(value)
+                    this.num2 = this.num1 *100
+                },
+                newNum2 (value) {
+                    this.num2 = parseFloat(value)
+                    this.num1 = this.num2/100
+                }
+            }
+        })
+        //方法2：通过watch
+    </script>
+</body>
+</html>

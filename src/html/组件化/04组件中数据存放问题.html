@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件</title>
+</head>
+<body>
+    <div id='app'>
+        <counter></counter>
+        <counter></counter>
+        <counter></counter>
+    </div>
+    <!--
+    1.组件怎么存放数据，
+    2.组件中的data为什么是函数 :因为函数每次会返回一个新的对象，组件之间的值互不影响,
+    每个组件实例都有自己的状态，都需要一个对象来保存自己的状态；
+    如果返回的是对象，那么所有组件就共用一个内存地址，一处改变其他都跟着变化
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <template id='counter'>
+        <div>
+            <div>counter:{{count}}</div>
+            <button @click='decrement'>-</button>
+            <button @click='increment'>+</button>
+        </div>
+    </template>
+    <script>
+        Vue.component('counter',{
+            template:'#counter',
+            data () {
+                return {
+                    count:0
+                }
+            },
+            methods:{
+                decrement () {
+                    this.count --
+                },
+                increment () {
+                    this.count ++
+                }
+            }
+        })
+        const app = new Vue({
+            el:'#app',
+            data:{
+                
+            }
+        })
+    </script>
+</body>
+</html>

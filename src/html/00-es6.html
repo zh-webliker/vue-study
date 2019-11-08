@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <button class="btn">按钮1</button>
+    <button class="btn">按钮2</button>
+    <button class="btn">按钮3</button>
+    <button class="btn">按钮4</button>
+    <button class="btn">按钮5</button>
+</body>
+<script>
+    //let
+    //es5for、if都没有作用域，只有函数有作用域
+    //es6中let有块级作用域
+    var btn = document.getElementsByClassName('btn')
+    //一（错误）
+    // for(var i = 0; i < btn.length; i++){
+    //     btn[i].addEventListener('click',function () {//这个function不会立即执行，是个回调函数
+    //         console.log(`第${i}个按钮`)
+    //     })
+    // }
+    //二（闭包）
+    for(var i = 0; i < btn.length; i++){
+        //在es5中只能通过闭包来解决这个问题，利用函数是一个作用域
+        (function(i){
+            btn[i].addEventListener('click',function () {
+                console.log(`第${i}个按钮`)
+            })
+        })(i)
+    }
+    //三（let）
+    //es6中，let有块级作用域
+    // for(let i = 0; i < btn.length; i++){
+    //     btn[i].addEventListener('click',function () {
+    //         console.log(`第${i}个按钮`)
+    //     })
+    // }
+
+
+    //const
+    //1.const，优先使用const，const是常量，不能再次被赋值
+    // const name = 'aaa';
+    // name = 'bbb';//报错
+    
+    //2.使用const定义的标识符，必须进行赋值
+    //const name //报错
+
+    //3.常量的含义是指向的对象不能修改（内存地址），但是改变对象内部属性
+    const arr = {
+        name : 'aaa'
+    }
+    console.log(arr.name)
+    //arr = {}//报错
+    arr.name = 'bbb'
+    console.log(arr.name)
+
+    //对象字面量
+    //es5属性 
+    let age = 19;
+    let obj = {
+        age: age
+    }
+    console.log(obj)
+    //es6a属性简写
+    let obj1 = {
+        age
+    }
+    console.log(obj1)
+    //es5方法
+    let obj2 = {
+        test: function () {
+            console.log('obj2')
+        }
+    }
+    //es6方法简写
+    let obj3 = {
+        test () {
+            console.log('obj3')
+        }
+    }
+    obj2.test();
+    obj3.test();
+</script>
+</html>
